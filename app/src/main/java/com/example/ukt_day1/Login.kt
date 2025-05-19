@@ -9,6 +9,7 @@ import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -31,8 +32,8 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        emailEditText = findViewById(R.id.LoginEmail)
-        passwordEditText = findViewById(R.id.LoginPassword)
+        emailEditText = findViewById(R.id.email_login)
+        passwordEditText = findViewById(R.id.login_password)
         loginButton = findViewById(R.id.BtnLogin)
         sessionManager = sessionManager(this)
 
@@ -51,7 +52,7 @@ class Login : AppCompatActivity() {
     }
 
     private fun setupRegisterSpan() {
-        val tv = findViewById<TextView>(R.id.tvDontHaveAccount)
+        val tv = findViewById<TextView>(R.id.tvNoAccount)
         val text = "Don't have an account? Register"
         val spannable = SpannableString(text)
 

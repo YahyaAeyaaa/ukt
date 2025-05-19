@@ -19,3 +19,17 @@ data class RegisterRequest(
 data class RefreshTokenRequest(
     val refreshToken: String
 )
+
+data class EditBookRequest(
+    val isbn: String,
+    val title: String,
+    val author: String,
+    val publisher: String,
+    val published_date: String,
+    val genre: String,
+    val language: String,
+    val description: String
+)
+
+
+

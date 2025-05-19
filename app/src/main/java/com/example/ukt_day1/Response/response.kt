@@ -18,16 +18,46 @@ data class RefreshTokenResponse(
     val accessToken: String?
 )
 
-data class User(
-    val id: Int,
-    @SerializedName("full_name") val fullName: String,
-    val email: String,
-    val role: String
+data class BooksResponse(
+    val status: String,
+    val message: String,
+    val data: BookList
 )
 
-// 2) Wrapper untuk response GET /users
-data class AllUsersResponse(
-    val status: Int,
-    val message: String,
-    val data: List<User>
+data class BookList(
+    val books: List<BookItem>
 )
+
+data class BookItem(
+    val id: Int,
+    val isbn: String,
+    val title: String,
+    val author: String,
+    val publisher: String,
+    val published_date: String,
+    val genre: String,
+    val language: String,
+    val description: String,
+    val cover_image: Size,
+    @SerializedName("uploaded_by")
+    val uploadedBy: String
+)
+
+data class Size(
+    val small: String,
+    val medium: String,
+    val large: String
+)
+
+data class EditResponse(
+    val status: String,
+    val message: String,
+    val data: EditItem
+)
+
+data class EditItem(
+    val id: String,
+    val title: String,
+    val author: String
+)
+

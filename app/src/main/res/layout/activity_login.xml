@@ -1,78 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="20dp"
+    android:padding="40dp"
     tools:context=".Login">
 
+    <TextView
+        android:layout_marginTop="40dp"
+        android:id="@+id/HelloText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="25dp"
+        android:gravity="center"/>
+
+
+    <EditText
+        android:id="@+id/email_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textSize="20dp"
+        android:inputType="textEmailAddress"/>
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:textSize="20dp"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:id="@+id/BtnLogin"/>
 
     <TextView
-        android:id="@+id/tvHello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Helooo, Login here!"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.186"
-        tools:ignore="MissingConstraints" />
-
-    <LinearLayout
+        android:id="@+id/tvNoAccount"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="40dp"
-        android:layout_marginTop="120dp">
+        android:layout_height="wrap_content"
+        android:text="Don't have an account? Register"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:paddingTop="20dp"/>
 
 
-        <EditText
-            android:layout_marginTop="30dp"
-            android:id="@+id/LoginEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:textSize="20dp"
-            android:inputType="textEmailAddress"/>
-
-        <EditText
-            android:id="@+id/LoginPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:textSize="20dp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:textColor="@color/white"
-            android:id="@+id/BtnLogin"/>
-
-        <TextView
-            android:id="@+id/tvDontHaveAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dont have an account? Register"
-            android:textSize="17sp"
-            android:gravity="center"
-            android:paddingTop="20dp"/>
-
-    </LinearLayout>
-
-
-    <!--    <ImageView-->
-<!--        android:id="@+id/imageView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        tools:srcCompat="@tools:sample/backgrounds/scenic" />-->
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+</LinearLayout>

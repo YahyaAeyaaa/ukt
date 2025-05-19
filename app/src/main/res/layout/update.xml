@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="60dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update data"
+        android:layout_gravity="center"
+        android:textSize="25dp"
+        android:layout_marginTop="25dp"/>
+
+    <EditText
+        android:id="@+id/editIsbn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Isbn"
+        android:textSize="20dp"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/editTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:textSize="20dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Author"
+        android:textSize="20dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editPublisher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Publisher"
+        android:textSize="20dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editPublishedDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Published date"
+        android:textSize="20dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editGenre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Genre"
+        android:textSize="20dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Language"
+        android:textSize="20dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        android:textSize="20dp"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Edit Data"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/textCancelEdit"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel edit? Tap here"
+        android:textSize="21sp"
+        android:gravity="center"/>
+</LinearLayout>

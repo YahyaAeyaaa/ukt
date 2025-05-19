@@ -7,6 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object apiClient {
     private const val BASE_URL = "https://minilibrary-s8ph.onrender.com/"
 
+
     // Menggunakan OkHttpClient tanpa pengaturan timeout `xkustom
     private val client = OkHttpClient.Builder()
         .build() // Default timeout akan digunakan
