@@ -1,8 +1,9 @@
+<!-- res/values/themes.xml -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Uktday1" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!-- Base application theme menggunakan MaterialComponents -->
+    <style name="Base.Theme.Uktday1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Kamu bisa atur warna primer, sekunder, dll. di sini -->
+        <!-- <item name="colorPrimary">@color/...</item> -->
     </style>
 
     <style name="Theme.Uktday1" parent="Base.Theme.Uktday1" />

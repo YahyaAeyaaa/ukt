@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">ukt-day1</string>
+    <string name="app_name">BukuKita</string>
+    <string name="search_hint">Cari judul buku...</string>
+    <string name="add_book">Tambah Buku Baru</string>
+    <string name="logout">Logout</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Hapus</string>
+    <string name="confirm_delete">Apakah Anda yakin ingin menghapus buku ini?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="by_author">By %s</string>
+    <string name="publisher">Publisher: %s</string>
+    <string name="category_all">Semua</string>
+    <string name="category_fantasy">Fantasi</string>
+    <string name="category_fiction">Fiksi</string>
+    <string name="category_education">Pendidikan</string>
+    <string name="category_romance">Romansa</string>
 </resources>

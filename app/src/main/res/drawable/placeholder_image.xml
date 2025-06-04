@@ -1,16 +1,18 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="100dp"
-    android:height="150dp"
+    android:height="140dp"
     android:viewportWidth="100"
-    android:viewportHeight="150">
-
-    <!-- Background abu-abu muda -->
+    android:viewportHeight="140">
     <path
-        android:fillColor="#CCCCCC"
-        android:pathData="M0,0h100v150h-100z" />
-
-    <!-- Ikon buku sederhana -->
+        android:fillColor="#DDDDDD"
+        android:pathData="M0,0h100v140h-100z"/>
     <path
-        android:fillColor="#888888"
-        android:pathData="M20,30h60v90h-60zM25,35v80M30,35v80M35,35v80" />
+        android:fillColor="#AAAAAA"
+        android:pathData="M35,50 L65,50 L65,90 L35,90 Z"/>
+    <path
+        android:fillColor="#AAAAAA"
+        android:pathData="M40,40 L60,40 L60,46 L40,46 Z"/>
+    <path
+        android:fillColor="#AAAAAA"
+        android:pathData="M40,95 L60,95 L60,101 L40,101 Z"/>
 </vector>

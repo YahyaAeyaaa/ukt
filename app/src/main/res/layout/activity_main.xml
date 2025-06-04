@@ -1,99 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    android:background="@color/colorWhite"
+    tools:context=".MainActivity">
 
+    <!--
+        View ini berfungsi sebagai background atas yang berbentuk lengkung.
+        Drawable bg_top_curve adalah file XML drawable yang berisi bentuk curve.
+        Posisi View ini di-constrain supaya melekat di atas, kiri, dan kanan parent.
+        Tinggi 220dp memberikan area visual yang cukup untuk efek background ini.
+    -->
+    <View
+        android:id="@+id/topBackground"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/bg_top_curve"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!--
+        ImageView ini menampilkan logo aplikasi.
+        Ukuran ditetapkan 171dp x 160dp agar proporsional dan terlihat jelas.
+        Margin top 4dp memberi sedikit jarak dari atas layout.
+        app:srcCompat menggunakan drawable logo yang sudah disiapkan (l_removebg_preview).
+        Constraint dibuat supaya gambar ini horizontal center di parent.
+    -->
+    <ImageView
+        android:id="@+id/imageAppLogo"
+        android:layout_width="171dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="App Logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/l_removebg_preview" />
+
+    <!--
+        TextView ini menampilkan teks "Create Account" sebagai judul halaman registrasi.
+        Warna putih supaya kontras dengan background melengkung.
+        Ukuran teks 24sp dan style bold agar cukup menonjol.
+        Margin top 8dp agar jarak yang nyaman dari logo di atasnya.
+        Constraint diatur supaya teks ini berada tepat di bawah image logo, dan center horizontal.
+    -->
     <TextView
         android:id="@+id/tvHello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Helooo, Welcomeee"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Create Account"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.186"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/imageAppLogo" />
 
-    <LinearLayout
+    <!--
+        CardView ini membungkus form registrasi agar tampilannya berkesan terangkat dan rapi.
+        Margin horizontal 24dp supaya tidak mepet ke pinggir layar.
+        Margin atas 32dp memberikan jarak dari background curved di atasnya.
+        Radius sudut 16dp agar sudutnya membulat, dan elevasi 8dp untuk shadow halus.
+        Constraint Top mengaitkan card ini tepat di bawah background atas, dan memenuhi lebar parent.
+    -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewForm"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="40dp"
-        android:layout_marginTop="50dp">
-
-
-        <EditText
-            android:id="@+id/RegisterName"
-            android:layout_marginTop="100dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Username"
-            android:textSize="20dp"
-            android:inputType="textPersonName"/>
-
-        <EditText
-            android:id="@+id/RegisterEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:textSize="20dp"
-            android:inputType="textEmailAddress"/>
-
-        <EditText
-            android:id="@+id/RegisterPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:textSize="20dp"
-            android:inputType="textPassword"/>
-
-        <EditText
-            android:id="@+id/RegisterPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Phone Number"
-            android:textSize="20dp"
-            android:inputType="text"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Register"
-            android:textColor="@color/white"
-            android:id="@+id/BtnRegister"/>
-
-        <TextView
-            android:id="@+id/tvHaveAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Have an account? Login"
-            android:textSize="17sp"
-            android:gravity="center"
-            android:paddingTop="20dp"/>
-
-
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="112dp"
-        android:layout_height="83dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvHello"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="32dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/topBackground"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <!--
+            LinearLayout vertikal sebagai container input form.
+            Padding 20dp agar isian tidak terlalu mepet ke tepi card.
+            Orientation vertical supaya tiap input ditumpuk ke bawah.
+        -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!--
+                TextInputLayout dengan ikon start person (user).
+                Margin bawah 12dp untuk spasi antar input.
+                Style Outline Box dari Material Components.
+                Dalamnya ada TextInputEditText untuk input username.
+                Hint memberikan petunjuk placeholder "Username".
+                InputType diatur ke textPersonName supaya keyboard cocok.
+            -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:startIconDrawable="@drawable/ic_person"
+                app:startIconTint="@color/colorDarkGrey"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/RegisterName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Username"
+                    android:inputType="textPersonName"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--
+                Input email dengan ikon email di depan.
+                Mirip seperti username tapi input type email.
+            -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:startIconDrawable="@drawable/ic_email"
+                app:startIconTint="@color/colorDarkGrey"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/RegisterEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--
+                Input password dengan ikon lock.
+                Dilengkapi password toggle supaya bisa lihat password.
+                Input type textPassword untuk keamanan input.
+            -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:startIconDrawable="@drawable/ic_lock"
+                app:startIconTint="@color/colorDarkGrey"
+                app:passwordToggleEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/RegisterPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--
+                Input nomor telepon dengan ikon phone.
+                InputType di-set phone supaya keyboard muncul angka dan simbol telepon.
+            -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:startIconDrawable="@drawable/ic_phone"
+                app:startIconTint="@color/colorDarkGrey"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/RegisterPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    android:inputType="phone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!--
+        Tombol register yang menempati lebar penuh dengan margin kiri dan kanan.
+        Tinggi tombol 56dp untuk ukuran mudah ditekan.
+        Teks tombol berwarna default dan tebal agar jelas terbaca.
+        Corner radius 12dp agar sudut membulat.
+        Constraint supaya tombol berada tepat di bawah form card.
+    -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/BtnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
+        android:text="REGISTER"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewForm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!--
+        TextView yang memberikan opsi bagi user yang sudah punya akun untuk login.
+        Ditempatkan tepat di bawah tombol register dengan margin atas 16dp.
+        Lebar mengikuti teks saja (wrap_content).
+        Constraint horizontal center di parent.
+    -->
+    <TextView
+        android:id="@+id/tvHaveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Have an account? Login"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/BtnRegister"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

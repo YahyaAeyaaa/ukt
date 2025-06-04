@@ -4,16 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Base64
-import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ukt_day1.api.apiClient
 import com.example.ukt_day1.request.RefreshTokenRequest
+import com.example.ukt_day1.response.BookItem
 import com.example.ukt_day1.ui.UserAdapter
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.chip.Chip
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,21 +28,42 @@ import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
 class Home : AppCompatActivity() {
-    private lateinit var logoutButton: Button
+    private lateinit var logoutButton: MaterialButton
     private lateinit var rvUsers: RecyclerView
     private lateinit var adapter: UserAdapter
+    private lateinit var etSearch: EditText
+    private lateinit var fabAddBook: FloatingActionButton
+    private lateinit var btnAddBook: MaterialButton
+    private lateinit var chipAll: Chip
+    private lateinit var chipFantasi: Chip
+    private lateinit var chipFiksi: Chip
+    private lateinit var chipPendidikan: Chip
+    private lateinit var chipRomansa: Chip
+
     private val handler = Handler(Looper.getMainLooper())
-    private val checkTokenInterval = TimeUnit.MINUTES.toMillis(1)  // ubah jadi 1 menit supaya lebih efisien
+    private val checkTokenInterval = TimeUnit.MINUTES.toMillis(1)
+
+    private var originalBookList = mutableListOf<BookItem>()
+    private var filteredBookList = mutableListOf<BookItem>()
+    private var currentFilter: String = "Semua"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        logoutButton = findViewById(R.id.logoutButton)
-        rvUsers = findViewById(R.id.rvUsers)
+        // Inisialisasi komponen UI
+        initUI()
+        setupListeners()
 
+        // Setup adapter dengan onItemClick untuk Detail
         adapter = UserAdapter(
             mutableListOf(),
+            onItemClick = { book ->
+                Intent(this, Detail::class.java).also {
+                    it.putExtra("BOOK_ID", book.id)
+                    startActivity(it)
+                }
+            },
             onEdit = { user ->
                 val intent = Intent(this, Put::class.java).apply {
                     putExtra("book_id", user.id.toString())
@@ -50,26 +78,105 @@ class Home : AppCompatActivity() {
                 }
                 startActivity(intent)
             },
-            onDelete = { user -> deleteBook(user.id) }
+            onDelete = { user -> showDeleteConfirmation(user.id, user.title) }
         )
 
         rvUsers.layoutManager = LinearLayoutManager(this)
         rvUsers.adapter = adapter
 
-        logoutButton.setOnClickListener { logoutAndRedirectToLogin() }
-
         startTokenChecker()
         fetchAllBooks()
     }
 
+    private fun initUI() {
+        logoutButton = findViewById(R.id.logoutButton)
+        rvUsers = findViewById(R.id.rvUsers)
+        etSearch = findViewById(R.id.etSearch)
+        fabAddBook = findViewById(R.id.fabAddBook)
+        btnAddBook = findViewById(R.id.btnAddBook)
+
+        // Inisialisasi chip filter
+        chipAll = findViewById(R.id.chipAll)
+        chipFantasi = findViewById(R.id.chipFantasi)
+        chipFiksi = findViewById(R.id.chipFiksi)
+        chipPendidikan = findViewById(R.id.chipPendidikan)
+        chipRomansa = findViewById(R.id.chipRomansa)
+    }
+
+    private fun setupListeners() {
+        // Logout button listener
+        logoutButton.setOnClickListener { logoutAndRedirectToLogin() }
+
+        // Search functionality
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterBooks(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        // Add book buttons
+        fabAddBook.setOnClickListener { navigateToAddBook() }
+        btnAddBook.setOnClickListener { navigateToAddBook() }
+
+        // Chip listeners untuk filter
+        chipAll.setOnClickListener { applyGenreFilter("Semua") }
+        chipFantasi.setOnClickListener { applyGenreFilter("Fantasi") }
+        chipFiksi.setOnClickListener { applyGenreFilter("Fiksi") }
+        chipPendidikan.setOnClickListener { applyGenreFilter("Pendidikan") }
+        chipRomansa.setOnClickListener { applyGenreFilter("Romansa") }
+    }
+
+    private fun navigateToAddBook() {
+        // Implementasi navigasi ke halaman tambah buku
+        startActivityForResult(Intent(this, Post::class.java), REQUEST_ADD_BOOK)
+    }
+
+    companion object {
+        private const val REQUEST_ADD_BOOK = 100
+    }
+
+    private fun applyGenreFilter(genre: String) {
+        currentFilter = genre
+        filterBooks(etSearch.text.toString())
+    }
+
+    private fun filterBooks(query: String) {
+        filteredBookList.clear()
+
+        val searchQuery = query.lowercase()
+
+        filteredBookList.addAll(originalBookList.filter { book ->
+            val matchesSearch = book.title.lowercase().contains(searchQuery) ||
+                    book.author.lowercase().contains(searchQuery)
+            val matchesGenre = currentFilter == "Semua" || book.genre == currentFilter
+
+            matchesSearch && matchesGenre
+        })
+
+        adapter.setData(filteredBookList)
+    }
+
+    private fun showDeleteConfirmation(bookId: Int, bookTitle: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Hapus Buku")
+            .setMessage("Apakah Anda yakin ingin menghapus buku \"$bookTitle\"?")
+            .setPositiveButton("Hapus") { _, _ -> deleteBook(bookId) }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
     override fun onResume() {
         super.onResume()
-        fetchAllBooks()  // refresh data setiap kali balik ke Home
+        fetchAllBooks()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacksAndMessages(null) // bersihkan handler biar gak memory leak
+        handler.removeCallbacksAndMessages(null)
     }
 
     private fun isTokenExpired(token: String): Boolean {
@@ -168,7 +275,9 @@ class Home : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val bookList = response.body()?.data?.books
                         if (bookList != null) {
-                            adapter.setData(bookList)
+                            originalBookList.clear()
+                            originalBookList.addAll(bookList)
+                            filterBooks(etSearch.text.toString())
                         } else {
                             Toast.makeText(this@Home, "Data buku kosong", Toast.LENGTH_SHORT).show()
                         }

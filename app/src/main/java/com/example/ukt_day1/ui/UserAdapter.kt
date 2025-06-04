@@ -3,55 +3,64 @@ package com.example.ukt_day1.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.ukt_day1.R
 import com.example.ukt_day1.response.BookItem
 
 class UserAdapter(
     private val buku: MutableList<BookItem>,
+    private val onItemClick: (BookItem) -> Unit,
     private val onEdit: (BookItem) -> Unit,
     private val onDelete: (BookItem) -> Unit
 ) : RecyclerView.Adapter<UserAdapter.VH>() {
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
-        val tvId            = view.findViewById<TextView>(R.id.tvId)
-        val tvIsbn          = view.findViewById<TextView>(R.id.tvIsbn)
-        val tvTitle         = view.findViewById<TextView>(R.id.tvTitle)
-        val tvAuthor        = view.findViewById<TextView>(R.id.tvAuthor)
-        val tvPublisher     = view.findViewById<TextView>(R.id.tvPublisher)
-        val tvPublishedDate = view.findViewById<TextView>(R.id.tvPublished_date)
-        val tvGenre         = view.findViewById<TextView>(R.id.tvGenre)
-        val tvLanguage      = view.findViewById<TextView>(R.id.tvLanguage)
-        val tvDescription   = view.findViewById<TextView>(R.id.tvDescription)
-        val ivCover = view.findViewById<ImageView>(R.id.ivCover)
-        val btnEdit         = view.findViewById<Button>(R.id.btnEdit)
-        val btnDelete       = view.findViewById<Button>(R.id.btnDelete)
+        val card: CardView = view.findViewById(R.id.coverCardView)
+        val ivCover: ImageView = view.findViewById(R.id.ivCover)
+        val tvTitle: TextView = view.findViewById(R.id.tvTitle)
+        val tvAuthor: TextView = view.findViewById(R.id.tvAuthor)
+        val tvPublisher: TextView = view.findViewById(R.id.tvPublisher)
+        val tvGenre: TextView = view.findViewById(R.id.tvGenre)
+        val btnEdit: ImageButton = view.findViewById(R.id.btnEdit)
+        val btnDelete: ImageButton = view.findViewById(R.id.btnDelete)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(
-        LayoutInflater.from(parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_user, parent, false)
-    )
+        return VH(view)
+    }
 
     override fun getItemCount(): Int = buku.size
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val boks = buku[position]
-        holder.tvId.text            = "ID: ${boks.id}"
-        holder.tvIsbn.text          = "ISBN: ${boks.isbn}"
-        holder.tvTitle.text         = "Title: ${boks.title}"
-        holder.tvAuthor.text        = "Author: ${boks.author}"
-        holder.tvPublisher.text     = "Publisher: ${boks.publisher}"
-        holder.tvPublishedDate.text = "Published: ${boks.published_date}"
-        holder.tvGenre.text         = "Genre: ${boks.genre}"
-        holder.tvLanguage.text      = "Language: ${boks.language}"
-        holder.tvDescription.text   = "Description: ${boks.description}"
-        // For now show medium cover URL; later can replace with ImageView
-        holder.ivCover.setImageResource(R.drawable.placeholder_image)
 
+        // Klik seluruh card untuk Detail
+        holder.itemView.setOnClickListener { onItemClick(boks) }
+
+        // Load cover image with Glide dan corner radius
+        Glide.with(holder.itemView.context)
+            .load(boks.cover_image.medium)
+            .apply(RequestOptions().transform(RoundedCorners(12)))
+            .placeholder(R.drawable.no_image_placeholder_svg)
+            .error(R.drawable.no_image_placeholder_svg)
+            .into(holder.ivCover)
+
+        // Set detail teks
+        holder.tvTitle.text = boks.title
+        holder.tvAuthor.text = "By ${boks.author}"
+        holder.tvPublisher.text = "Publisher: ${boks.publisher}"
+        holder.tvGenre.text = boks.genre
+
+        // Edit & Delete
         holder.btnEdit.setOnClickListener { onEdit(boks) }
         holder.btnDelete.setOnClickListener { onDelete(boks) }
     }
