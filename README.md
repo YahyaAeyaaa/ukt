@@ -1,4 +1,4 @@
-# 📱 Aplikasi UKT
+# 📱 Library UKT
 
 Aplikasi Android yang dibuat untuk mengelola data buku menggunakan autentikasi token. Proyek ini dibangun dengan arsitektur yang sederhana namun fungsional, cocok untuk keperluan pembelajaran maupun pengembangan lebih lanjut.
 
